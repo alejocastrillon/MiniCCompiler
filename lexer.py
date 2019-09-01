@@ -48,7 +48,7 @@ class Lexer(sly.Lexer):
 
     @_(r'\/\*.*')
     def multilineCommentNotClosedError(self, t):
-        error(self.lineno, 'Comentario no cerrado')
+        error('En la línea 'self.lineno, ' Comentario no cerrado')
         self.index += 1
 
 
@@ -75,12 +75,28 @@ class Lexer(sly.Lexer):
     STRING_LIT = r'[\"\'].*[\"\']'
 
     IDENT = r'[a-zA-Z]+[a-zA-Z0-9]*'
-
+    
+    @_(r'\n+')	
+	def ignore_newline(self, t):
+		self.lineno += t.value.count('\n')
+		return t
+    @_(r'\r')
+	def scapeCodError(self,t):
+		error('En la línea 'self.lineno 'Cadena de código de escape invalido')
+		self.endex +=1
+        
+    def error(self, t):
+		error('En la línea 'self.lineno, ' se encuentra un caracter ilegal %r' % t.value[0])
+		self.index += 1
 
     
 def main():
     import sys
     text = 'hola=-9656.75;\nmychar="a";\nmystring="hello world";\n//Te amo\n/*You are the best*/'
+    if len(sys.argv) != 2:
+		sys.stderr.write('Uso: python3 -m clexer filename\n')
+		raise SystemExit(1)
+        
     lexer = Lexer()
     for tok in lexer.tokenize(text):
         print(tok)
