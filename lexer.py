@@ -3,12 +3,12 @@ import sly
 
 class Lexer(sly.Lexer):
 
-    keywords = {'if', 'else', 'forx', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void', 'float', 
+    keywords = {'if', 'else', 'for', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void', 'float', 
     'size', 'bool', 'true', 'false', 'const'}
 
     tokens = {
-        * { kw.upper() for kw in keywords},
-        LE, GE, EQ, NE, LT, GT, OR, AND, NOT, INT_LIT, FLOAT_LIT, IDENT, BOOL_LIT, CHAR_LIT, STRING_LIT, INC, DEC, 
+        * { kw.upper() for kw in keywords},LE, GE, EQ, NE, LT, GT, OR, AND, NOT,
+        IDENT, INT_LIT, FLOAT_LIT, IDENT, BOOL_LIT, CHAR_LIT, STRING_LIT, INC, DEC, 
         ADDEQ, SUBEQ, MULEQ, DIVEQ, MODEQ}
     
     literals = {'(', ')', '{', '}', ';', ',', '.', '+', '-', '*', '/', '%', '<', '>', '=', '!', '[', ']', ' '}
