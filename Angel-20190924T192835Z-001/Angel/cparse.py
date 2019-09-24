@@ -162,7 +162,7 @@ class Parser(sly.Parser):
 
 	@_(";")
 	def expr(self, p):
-		return NullStatement();
+		return NullStatement()
 
 	@_("expr '[' expr ']' = expr")
 	def arrayAsignment(self, p):
