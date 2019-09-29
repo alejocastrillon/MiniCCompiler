@@ -126,7 +126,147 @@ class Parser(sly.Parser):
 	@_("decl_list")
 	def program(self, p):
 		pass
+	@_("decl_list decl")
+	def decl_list(self, p):
+		pass
 
+	@_("decl")
+	def decl_list(self, p):
+		pass
+
+	@_("var_decl")
+	def decl(self, p):
+		pass
+
+	@_("fun_decl")
+	def decl(self, p):
+		pass  
+			 
+	@_("type_spec IDENT ';'")
+	def var_decl(self, p):
+		pass
+
+	@_("type_spec IDENT '[' ']' ';'")
+	def var_decl(self, p):
+		pass
+
+	@_("VOID", "BOOL", "INT", "FLOAT")
+	def type_spec(self, p):
+		pass
+
+	@_("type_spec IDENT '(' params ')' compound_stmt")
+	def fun_decl(self, p):
+		pass
+
+	@_("param_list")
+	def params(self, p):
+		pass
+
+	@_("VOID")
+	def params(self, p):
+		pass
+
+	@_("param_list , param")
+	def param_list(self, p):
+		pass
+
+	@_("param")
+	def param_list(self, p):
+		pass
+
+	@_("type_spec IDENT")
+	def param(self, p):
+		pass
+	
+	@_("type_spec IDENT '[' ']'")
+	def param(self, p):
+		pass
+
+	@_("'{' local_decls stmt_list '}'")
+	def compound_stmt(self, p):
+		pass
+
+	@_("local_decls local_decl")
+	def local_decls(self, p):
+		pass
+
+	@_("empty")
+	def local_decls(self, p):
+		pass
+			| 
+	@_("type_spec IDENT ';'")
+	def local_decl(self, p):
+		pass
+
+	@_("type_spec IDENT '[' ']' ';'")
+	def local_decl(self, p):
+		pass
+
+	@_("stmt_list stmt")
+	def stmt_list(self, p):
+		pass
+
+	@_("empty")
+	def stmt_list(self, p):
+		pass
+
+	@_("expr_stmt")
+	def stmt(self, p):
+		pass
+
+	@_("compound_stmt")
+	def stmt(self, p):
+		pass 
+
+	@_("if_stmt")
+	def stmt(self, p):
+		pass 
+
+	@_("while_stmt")
+	def stmt(self, p):
+		pass 
+
+	@_("return_stmt")
+	def stmt(self, p):
+		pass 
+
+	@_("break_stmt")
+	def stmt(self, p):
+		pass  
+
+	@_("expr ';'")
+	def expr_stmt(self, p):
+		pass
+
+	@_("';'")
+	def expr_stmt(self, p):
+		pass
+	
+	@_("WHILE '(' expr ')' stmt")
+	def while_stmt(self, p):
+		pass
+
+	@_("IF '(' expr ')' stmt")
+	def if_stmt(self, p):
+		pass
+
+	@_("IF '(' expr ')' stmt ELSE stmt")
+	def if_stmt(self, p):
+		pass
+
+	@_("RETURN ';'")
+	def return_stmt(self, p):
+		pass
+
+	@_("RETURN expr ';'")
+	def return_stmt(self, p):
+		pass
+			
+	@_("BREAK ';'")
+	def break_stmt(self, p):
+		pass 
+	
+	
 
 	# ----------------------------------------------------------------------
 	# NO MODIFIQUE
