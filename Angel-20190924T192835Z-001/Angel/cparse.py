@@ -1,4 +1,4 @@
-# coding:
+# coding: utf-8
 r'''
 Proyecto 2: Escribir un analizador
 ==================================
@@ -9,61 +9,61 @@ La siguiente gramática es parcial. Se agregan más características en
 proyectos posteriores.
 
 	program : decl_list
-
-	decl_list : decl_list decl
+	
+	decl_list : decl_list decl 
 			| decl
-
-	decl : var_decl
+					
+	decl : var_decl 
 			| fun_decl
-
+			
 	var_decl : type_spec IDENT ;
 			| type_spec IDENT [ ] ;
 
-	type_spec : VOID
-			| BOOL
-			| INT
+	type_spec : VOID 
+			| BOOL 
+			| INT 
 			| FLOAT
 
 	fun_decl : type_spec IDENT ( params ) compound_stmt
 
-	params : param_list
-			| VOID
-
-	param_list : param_list , param
+	params : param_list 
+			| VOID 
+	
+	param_list : param_list , param 
 			| param
 
-	param : type_spec IDENT
+	param : type_spec IDENT 
 			| type_spec IDENT [ ]
-
+	
 	compound_stmt : { local_decls stmt_list }
-
-	local_decls : local_decls local_decl
+	
+	local_decls : local_decls local_decl 
 			| empty
-
-	local_decl : type_spec IDENT ;
+			
+	local_decl : type_spec IDENT ; 
 			| type_spec IDENT [ ] ;
 
-	stmt_list : stmt_list stmt
+	stmt_list : stmt_list stmt 
 			| empty
-
-	stmt : expr_stmt
-			| compound_stmt
-			| if_stmt
-			| while_stmt
-			| return_stmt
-			| break_stmt
-
-	expr_stmt : expr ;
+			
+	stmt : expr_stmt 
+			| compound_stmt 
+			| if_stmt 
+			| while_stmt 
+			| return_stmt 
+			| break_stmt 
+	
+	expr_stmt : expr ; 
 			| ;
 
 	while_stmt : WHILE ( expr ) stmt
 
-	if_stmt : IF ( expr ) stmt
+	if_stmt : IF ( expr ) stmt 
 			| IF ( expr ) stmt ELSE stmt
 
-	return_stmt : RETURN ;
+	return_stmt : RETURN ; 
 			| RETURN expr ;
-
+			
 	break_stamt : BREAK ;
 
 	expr : IDENT = expr | IDENT[ expr ] = expr
@@ -78,10 +78,10 @@ proyectos posteriores.
 			| IDENT | IDENT[ expr ] | IDENT( args ) | IDENT . size
 			| BOOL_LIT | INT_LIT | FLOAT_LIT | NEW type_spec [ expr ]
 
-	arg_list : arg_list , expr
-			| expr
-
-	args : arg_list
+	arg_list : arg_list , expr 
+			| expr 
+	
+	args : arg_list 
 			| empty
 
 
@@ -96,20 +96,20 @@ import sly
 
 # ----------------------------------------------------------------------
 # El siguiente import carga la función error(lineno, msg) que se debe
-# usar para informar todos los mensajes de error emitidos por su analizador.
-# Las pruebas unitarias y otras características del compilador se basarán
-# en esta función. Consulte el archivo errors.py para obtener más
+# usar para informar todos los mensajes de error emitidos por su analizador. 
+# Las pruebas unitarias y otras características del compilador se basarán 
+# en esta función. Consulte el archivo errors.py para obtener más 
 # documentación sobre el mecanismo de manejo de errores.
 from errors import error
 
 # ------------------------------------------------- ---------------------
-# Importar la clase lexer. Su lista de tokens es necesaria para validar y
+# Importar la clase lexer. Su lista de tokens es necesaria para validar y 
 # construir el objeto analizador.
 from tokenizer import *
 
 # ----------------------------------------------------------------------
 # Obtener los nodos AST.
-# Lea las instrucciones en ast.py
+# Lea las instrucciones en ast.py 
 from cast import *
 
 
@@ -121,14 +121,13 @@ class Parser(sly.Parser):
 	precedence = (
 		('left',","),
 		('right',"="),
-		('left',"INC","DEC"),
 		('left',"OR"),
 		('left',"AND"),
 		('left',"EQ","NE"),
-		('left',"LT", "LE","GE","GT"),
+		('left',"<", "LE","GE",">"),
 		('left', "+","-"),
 		('left', "*","/","%"),
-		('right',"UNARY"),
+		('right',UNARY),
 		('right',"SIZE"),
 		('left',"(",")","[","]","."),
 		('nonassoc','IF'),
@@ -151,7 +150,7 @@ class Parser(sly.Parser):
 	@_('var_decl')
 	def decl(self, p):
 		return (p[0])
-
+		
 	@_('fun_decl')
 	def decl(self, p):
 		return (p[0])
@@ -213,7 +212,7 @@ class Parser(sly.Parser):
 	def local_decls(self, p):
 		p.local_decls.append(p.local_decl)
 		return p.local_decls
-
+		
 	@_('empty')
 	def local_decls(self, p):
 		#p.local_decls.append(p.local_decl)
@@ -235,7 +234,7 @@ class Parser(sly.Parser):
 	@_('type_spec IDENT "[" "]" ";"')
 	def local_decl(self, p):
 		return ArrayLocalDeclaration(p.IDENT,p.type_spec,lineno=p.lineno)
-
+	
 
 	@_('stmt_list stmt')
 	def stmt_list(self, p):
@@ -245,11 +244,11 @@ class Parser(sly.Parser):
 	@_('empty')
 	def stmt_list(self, p):
 		return []
-
+		
 	@_('expr_stmt','if_stmt','while_stmt','return_stmt','break_stmt')
 	def stmt(self, p):
 		return p[0]
-
+		
 	@_('compound_stmt')
 	def stmt(self, p):
 		return [p[0]]
@@ -257,7 +256,7 @@ class Parser(sly.Parser):
 	@_('expr ";"')
 	def expr_stmt(self, p):
 		return p[0]
-
+		
 	@_('";"')
 	def expr_stmt(self, p):
 		return []
@@ -303,11 +302,11 @@ class Parser(sly.Parser):
 	@_('"(" expr ")"')
 	def expr(self, p):
 		return p.expr
-
+	
 
 	@_('IDENT')
 	def location(self, p):
-		return SimpleLocation(p.IDENT,lineno=p.lineno)
+		return SimpleLocation(p.IDENT,lineno=p.lineno) 
 
 	@_('IDENT "[" expr "]"')
 	def location(self, p):
@@ -328,15 +327,15 @@ class Parser(sly.Parser):
 	@_('TRUE', 'FALSE')
 	def expr(self, p):
 		return BoolLiteral(p[0])
-
+		
 	@_('INT_LIT')
 	def expr(self, p):
 		return IntegerLiteral(p.INT_LIT)
-
+	
 	@_('FLOAT_LIT')
 	def expr(self, p):
 		return FloatLiteral(p.FLOAT_LIT)
-
+		
 
 	@_('NEW type_spec "[" expr "]"')
 	def expr(self, p):
@@ -364,7 +363,7 @@ class Parser(sly.Parser):
 	@_('empty')
 	def args(self, p):
 		return []
-
+		
 	@_('')
 	def empty(self, p):
 		return Null_Statement(None)
@@ -372,8 +371,8 @@ class Parser(sly.Parser):
 	# ----------------------------------------------------------------------
 	# NO MODIFIQUE
 	#
-	# manejo de errores catch-all. Se llama a la siguiente función en
-	# cualquier entrada incorrecta. p es el token ofensivo o None si
+	# manejo de errores catch-all. Se llama a la siguiente función en 
+	# cualquier entrada incorrecta. p es el token ofensivo o None si 
 	# el final de archivo (EOF).
 	def error(self, p):
 		if p:
@@ -420,3 +419,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
