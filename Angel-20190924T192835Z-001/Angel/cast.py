@@ -352,7 +352,10 @@ class DotVisitor(NodeVisitor):
 	Crea archivo tipo 'dot' para Graphiz
 	'''
 	
-	_dot_graph_defaults = { }
+	_dot_graph_defaults = { 
+		'graph_name': 'AST',
+		'graph_type': 'digraph'
+	}
 	
 	_dot_node_defaults = {
 		'shape': 'box',
@@ -363,7 +366,7 @@ class DotVisitor(NodeVisitor):
 	_dot_edge_defaults = { }
 	
 	def __init__(self):
-		self.dot = pydot.Dot(graph_type='graph', **self._dot_graph_defaults)
+		self.dot = pydot.Dot(**self._dot_graph_defaults)
 		'''creamos un obj del tipo dot que se va a llamar AST'''
 		self.dot.set_node_defaults(**self._dot_node_defaults)
 		self.dot.set_edge_defaults(**self._dot_edge_defaults)
@@ -375,7 +378,7 @@ class DotVisitor(NodeVisitor):
 
 	def _id(self):
 		self.id += 1
-		return 'n%02d' % self.id
+		return 'n{:02d}'.format(self.id)
 
 	def generic_visit(self, node): 
 		#siempre va a pasar poraca cada vez queeste en un nodo
