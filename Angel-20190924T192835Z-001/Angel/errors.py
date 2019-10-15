@@ -11,13 +11,13 @@ capacidades adicionales a los efectos de las pruebas unitarias.
 
 Para reportar errores en su compilador, use la función error(). Por ejemplo:
 
-	error(lineno, 'Algún tipo de mensaje de error del compilador')
+    error(lineno, 'Algún tipo de mensaje de error del compilador')
 
 donde lineno es el número de línea en el que se produjo el error. Si su 
 compilador admite varios archivos de origen, agregue el argumento de palabra 
 clave de nombre de archivo.
 
-	error(lineno, 'Algún tipo de mensaje de error', filename='foo.src')
+    error(lineno, 'Algún tipo de mensaje de error', filename='foo.src')
 
 La función de utilidad errors_reported() devuelve el número total de 
 errores informados hasta el momento. Diferentes etapas del compilador 
@@ -32,29 +32,29 @@ _num_errors = 0
 
 
 def error(lineno, message, filename=None):
-	'''
-	Reporta un error de compilación a todos los suscriptores
-	'''
-	global _num_errors
-	if not filename:
-		errmsg = "{}: {}".format(lineno, message)
-	else:
-		errmsg = "{}:{}: {}".format(filename, lineno, message)
+    '''
+    Reporta un error de compilación a todos los suscriptores
+    '''
+    global _num_errors
+    if not filename:
+        errmsg = "{}: {}".format(lineno, message)
+    else:
+        errmsg = "{}:{}: {}".format(filename, lineno, message)
 
-	print(errmsg, file=sys.stderr)
-	_num_errors += 1
+    print(errmsg, file=sys.stderr)
+    _num_errors += 1
 
 
 def errors_reported():
-	'''
-	Retorna el número de errores reportados
-	'''
-	return _num_errors
+    '''
+    Retorna el número de errores reportados
+    '''
+    return _num_errors
 
 
 def clear_errors():
-	'''
-	Borre la cantidad total de errores reportados.
-	'''
-	global _num_errors
-	_num_errors = 0
+    '''
+    Borre la cantidad total de errores reportados.
+    '''
+    global _num_errors
+    _num_errors = 0

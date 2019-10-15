@@ -3,14 +3,14 @@ import sly
 
 class Lexer(sly.Lexer):
 
-    keywords = {'if', 'else', 'for', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void', 'float', 
+    keywords = {'if', 'else', 'for', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void', 'float',
     'size', 'bool', 'true', 'false', 'const'}
 
     tokens = {
         * { kw.upper() for kw in keywords},LE, GE, EQ, NE, LT, GT, OR, AND, NOT,
-        INT_LIT, FLOAT_LIT, IDENT, BOOL_LIT, CHAR_LIT, STRING_LIT, INC, DEC, 
+        INT_LIT, FLOAT_LIT, IDENT, BOOL_LIT, CHAR_LIT, STRING_LIT, INC, DEC,
         ADDEQ, SUBEQ, MULEQ, DIVEQ, MODEQ}
-    
+
     literals = {'(', ')', '{', '}', ';', ',', '.', '+', '-', '*', '/', '%', '<', '>', '=', '!', '[', ']', ' '}
 
     ignore = '\t\n'
@@ -48,12 +48,12 @@ class Lexer(sly.Lexer):
 
     @_(r'\/\*.*')
     def multilineCommentNotClosedError(self, t):
-        error('En la línea 'self.lineno, ' Comentario no cerrado')
+        error(self.lineno, 'Comentario no cerrado')
         self.index += 1
 
 
     FLOAT_LIT = r'[-]?[0-9]+[.][0-9]*'
-    
+
 
     @_(r'0[bB][01]+', r'[1-9][0-9]*', r'0[xX][0-9a-fA-F]+')
     def INT_LIT(self, t):
@@ -69,34 +69,34 @@ class Lexer(sly.Lexer):
         t.value = int(t.value, 8)
 
     NOT = r'not'
-    
+
     CHAR_LIT = r'[\'\"].[\'\"]'
 
     STRING_LIT = r'[\"\'].*[\"\']'
 
     IDENT = r'[a-zA-Z]+[a-zA-Z0-9]*'
-    
-    @_(r'\n+')	
-	def ignore_newline(self, t):
-		self.lineno += t.value.count('\n')
-		return t
-    @_(r'\r')
-	def scapeCodError(self,t):
-		error('En la línea 'self.lineno 'Cadena de código de escape invalido')
-		self.endex +=1
-        
-    def error(self, t):
-		error('En la línea 'self.lineno, ' se encuentra un caracter ilegal %r' % t.value[0])
-		self.index += 1
 
-    
+    @_(r'\n+')
+    def ignore_newline(self, t):
+        self.lineno += t.value.count('\n')
+        return t
+    @_(r'\r')
+    def scapeCodError(self,t):
+        error(self.lineno, 'En la línea Cadena de código de escape invalido')
+        self.endex +=1
+
+    def error(self, t):
+        error(self.lineno, 'En la línea se encuentra un caracter ilegal %r' % t.value[0])
+        self.index += 1
+
+
 def main():
     import sys
-    text = 'hola=-9656.75;\nmychar="a";\nmystring="hello world";\n//Te amo\n/*You are the best*/'
     if len(sys.argv) != 2:
-		sys.stderr.write('Uso: python3 -m clexer filename\n')
-		raise SystemExit(1)
-        
+        sys.stderr.write('Uso: python3 lexer.py filename\n')
+        raise SystemExit(1)
+    f = open(sys.argv[1], "r")
+    text = f.read()
     lexer = Lexer()
     for tok in lexer.tokenize(text):
         print(tok)
