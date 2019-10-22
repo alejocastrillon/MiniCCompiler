@@ -336,6 +336,10 @@ class Parser(sly.Parser):
     def expr(self, p):
         return FloatLiteral(p.FLOAT_LIT)
 
+    @_('CHAR_LIT')
+    def expr(self, p):
+            return StringLiteral(p.CHAR_LIT)
+
 
     @_('type_spec "[" expr "]"')
     def expr(self, p):

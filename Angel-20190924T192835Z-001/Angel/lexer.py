@@ -3,17 +3,17 @@ import sly
 
 class Lexer(sly.Lexer):
 
-    keywords = {'if', 'else', 'for', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void', 'float',
-    'size', 'bool', 'true', 'false', 'const'}
+    keywords = {'if', 'else', 'for', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void',
+    'float', 'size', 'bool', 'true', 'false', 'const'}
 
     tokens = {
         * { kw.upper() for kw in keywords},LE, GE, EQ, NE, LT, GT, OR, AND, NOT,
         INT_LIT, FLOAT_LIT, IDENT, BOOL_LIT, CHAR_LIT, STRING_LIT, INC, DEC,
         ADDEQ, SUBEQ, MULEQ, DIVEQ, MODEQ}
 
-    literals = {'(', ')', '{', '}', ';', ',', '.', '+', '-', '*', '/', '%', '<', '>', '=', '!', '[', ']', ' '}
+    literals = {'(', ')', '{', '}', ';', ',', '.', '+', '-', '*', '/', '%', '<', '>', '=', '!', '[', ']'}
 
-    ignore = '\t\n'
+    ignore = '\t\n\ \;\(\)\{\}\='
 
     LE = r'<='
 
@@ -43,6 +43,40 @@ class Lexer(sly.Lexer):
 
     MODEQ = r'\%\='
 
+    INT = r'int'
+
+    IF = r'if'
+
+    ELSE = r'else'
+
+    FOR = r'for'
+
+    DO = r'do'
+
+    WHILE = r'while'
+
+    RETURN = r'return'
+
+    BREAK = r'break'
+
+    CHAR = r'char'
+
+    DELETE = r'delete'
+
+    VOID = r'void'
+
+    FLOAT = r'float'
+
+    SIZE = r'size'
+
+    BOOL = r'bool'
+
+    TRUE = r'true'
+
+    FALSE = r'false'
+
+    CONST = r'const'
+
     ignore_multiline_comment = r'\/\*.*\*\/'
     ignore_line_comment = r'\/\/.*\n'
 
@@ -52,7 +86,9 @@ class Lexer(sly.Lexer):
         self.index += 1
 
 
-    FLOAT_LIT = r'[-]?[0-9]+[.][0-9]*'
+    @_(r'[-]?[0-9]+[.][0-9]*')
+    def FLOAT_LIT(self, t):
+        t.value = float(t.value)
 
 
     @_(r'0[bB][01]+', r'[1-9][0-9]*', r'0[xX][0-9a-fA-F]+')
@@ -64,9 +100,6 @@ class Lexer(sly.Lexer):
         else:
             t.value = int(t.value, 10);
 
-    @_(r'0[1-7][0-7]*')
-    def INT_LIT(self, t):
-        t.value = int(t.value, 8)
 
     NOT = r'not'
 

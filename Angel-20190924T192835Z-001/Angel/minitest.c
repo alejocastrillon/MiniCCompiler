@@ -1,6 +1,5 @@
-int hola=-9656.75;
-mychar="a";
-mystring="hello world";
+float hola=1.87;
+char mychar="a";
 //Te amo
 /*You are the best*/
 void function(char par) {
