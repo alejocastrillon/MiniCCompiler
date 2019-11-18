@@ -4,7 +4,7 @@ import sly
 class Lexer(sly.Lexer):
 
     keywords = {'if', 'else', 'for', 'do', 'while', 'return', 'break', 'not', 'int', 'char', 'delete', 'void',
-    'float', 'size', 'bool', 'true', 'false', 'const'}
+    'float', 'size', 'bool', 'true', 'false', 'const', 'new', 'sub', 'add', 'mde', 'te', 'de', 'pe', 'me'}
 
     tokens = {
         * { kw.upper() for kw in keywords},LE, GE, EQ, NE, LT, GT, OR, AND, NOT,
