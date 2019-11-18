@@ -81,22 +81,22 @@ Rule 77    empty -> <empty>
 
 Unused terminals:
 
-    DEC
-    MULEQ
-    SUBEQ
-    LT
-    DO
-    STRING_LIT
-    ADDEQ
-    DELETE
     INC
+    ADDEQ
+    DIVEQ
+    GT
+    LT
+    DEC
+    STRING_LIT
     CHAR
     BOOL_LIT
-    MODEQ
+    MULEQ
+    DELETE
     FOR
-    GT
+    SUBEQ
+    MODEQ
+    DO
     NOT
-    DIVEQ
 
 Terminals, with rules where they appear:
 

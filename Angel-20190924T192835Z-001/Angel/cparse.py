@@ -117,6 +117,7 @@ class Parser(sly.Parser):
     debugfile = 'parser.txt'
 
     tokens = Lexer.tokens
+    print(tokens)
 
     precedence = (
         ('left',","),
@@ -396,6 +397,9 @@ def parse(source):
     '''
     lexer = Lexer()
     parser = Parser()
+    print(source)
+    for tok in lexer.tokenize(source):
+        print(tok)
     ast = parser.parse(lexer.tokenize(source))
     return ast
 
