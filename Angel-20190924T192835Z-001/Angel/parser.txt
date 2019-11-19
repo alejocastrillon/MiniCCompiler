@@ -94,19 +94,19 @@ Rule 89    empty -> <empty>
 Unused terminals:
 
     TRUE
-    DEC
-    SUBEQ
-    DELETE
-    MULEQ
-    ADDEQ
     FALSE
-    INC
-    MODEQ
-    DIVEQ
-    GT
-    DO
-    LT
     NOT
+    MULEQ
+    LT
+    GT
+    INC
+    DELETE
+    SUBEQ
+    ADDEQ
+    DO
+    MODEQ
+    DEC
+    DIVEQ
 
 Terminals, with rules where they appear:
 

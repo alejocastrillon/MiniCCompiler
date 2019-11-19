@@ -1,1 +1,3 @@
-int foo = 4;
+void function() {
+    return 2+5;
+}
